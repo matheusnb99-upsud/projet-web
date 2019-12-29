@@ -1,0 +1,14 @@
+# .htaccess
+
+# ---- Establish a custom 404 File not Found page --
+
+ErrorDocument 404 /vue/filenotfound.php
+
+# ---- Prevent directory file listing in all of my folders  --
+
+IndexIgnore *
+
+
+# ---- Make pages render without their extension --
+
+Options +MultiViews

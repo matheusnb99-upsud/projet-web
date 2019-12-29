@@ -1,0 +1,8 @@
+/application	# the MVC
+   /controler
+   /model	
+   /vue
+
+/docs		# docs about the site
+/images 	# png files
+/style  	# css/sass files

@@ -1,0 +1,17 @@
+Model:
+    -Bb.php
+    -Membres.php
+    
+Vue:
+	-accueil.php (un utilisateur peut voir des threads meme si il n'est pas loggué)
+    -formulaire-inscription.php
+    -formulaire-connection.php
+    -/espace-membres:
+		users/[$id].php
+		threads/[$id].php (user peut regarder des posts mais pas voir la page du post avec les commentaires)
+    
+    
+Controle
+    -inscription.php
+    -connection.php
+    -deconection.php

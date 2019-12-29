@@ -1,0 +1,8 @@
+changement attribut:
+    utilisateurs: identifiant_user INT -> identifiant_user INT AUTO_INCREMENT,
+
+creation de table:
+    ???
+
+addition de attribut:
+    dateLimite DATE -> -- date NOW() + 3 days

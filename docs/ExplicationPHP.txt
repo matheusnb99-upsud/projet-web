@@ -1,0 +1,18 @@
+formulaire_inscription.php
+	Js utilisé pour verifier si les deux mails correspondent aussi que la "force" du mot de passe de fasson plus fluidement
+	J'ai opté par l'utilisation du mot clé 'class' pour facilier la lecture et parce que l'alternative etait longue (avec le mot clé 'fonction' pour la classe [oui wtf])
+
+	Explication date de naissance (oui je sais c'est un peu clumsy mais si ca marche ca marche):
+	<p>Date de naissance
+		<input type="text" 				<!-- type='text' nous permet de mettre un placeholder c-a-d pas besoin de le faire en css ce que nous facilite la vie -->
+			onfocus="(this.type='date');
+				(this.min='1900-01-01');
+				(this.max='<?php
+							echo '20'
+								.date('y-m-d', strtotime('-16 year')) // à 16 ans d'aujourd'hui
+							?>')" 
+			onblur="(this.type='text')" 
+			id="date"
+			name="dateNaissance" 
+			placeholder="Date de Naissance">
+	</p>

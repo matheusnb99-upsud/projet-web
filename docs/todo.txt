@@ -1,0 +1,25 @@
+formulaire_inscription:
+    script verification mdp
+    script verification mail
+
+
+    (form1 && form2).outFocus => echo verif(form1,form2)? "error":null;
+    done
+
+connexion:
+    si user.inexistant? header(404:membres)
+    done
+
+---
+Acc:
+    if like => update bd + update vue sans recharger
+        => ajax + connect _POST
+
+
+acc:
+    si _session (cookie?) => change header to logged.php
+    create  logged.php/header
+            unlogged.php/header
+
+formulaire_inscription:
+    Validator.js dans son propre ficher 

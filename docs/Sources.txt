@@ -1,0 +1,12 @@
+Liste de sites utilisees pour ecrire ce site:
+Creation de la doc:
+https://www.writethedocs.org/guide/writing/beginners-guide-to-docs/
+
+Ficher .htaccess
+http://www.htaccess-guide.com
+
+Class js
+https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript
+
+Update page sans recharger (ajax + php)
+https://www.youtube.com/watch?v=aujNp92p0Uc
