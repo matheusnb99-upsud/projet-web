@@ -26,3 +26,7 @@ formulaire_inscription:
 
 README.MD
 	faire le readme
+
+
+formulaire_creation_proposition:
+    wysiwyg editor

@@ -13,7 +13,10 @@
     $membre = null;
     try{
         $membre = new Membre($co, $email,$password);
+        $membre->startConnection();
         header('location:../vue/accueil.php');
+    }catch(Exeption $e){
+        echo "ttest";
     }
     finally{
         if(!is_object($membre)) echo 'Wrong credentials';

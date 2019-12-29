@@ -13,10 +13,8 @@
     
     $co = (new Bd('databasProjetTutore'))->connection();
     $membre = new Membre($co, $email,$password, $nom, $prenom, $dateN);
-    
-    header('Location:../vue/formulaire_connexion.php');
-
-    
+    $membre->startConnection();
+    header('location:../vue/accueil.php');
     
     //mysqli_close($co);
     

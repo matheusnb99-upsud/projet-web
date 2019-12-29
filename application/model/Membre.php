@@ -27,7 +27,8 @@ class Membre{
                                              AND `password` = '$password'")
                 or die;
                 
-                if(mysqli_num_rows($result)==0) throw new Exception();
+                //if(mysqli_num_rows($result)==0) throw new Exception();
+                if($test = mysqli_num_rows($result)==0) echo $test;
 
                 while($row = mysqli_fetch_assoc($result)){
                     $this->co = $co;
@@ -77,6 +78,7 @@ class Membre{
     }
     public function startConnection(){
         session_start();
+        $_SESSION['id'] = $this->id;
         $_SESSION['nom'] = $this->nom;
         $_SESSION['prenom'] = $this->prenom;
         $_SESSION['email'] = $this->email;
@@ -89,5 +91,11 @@ class Membre{
         session_destroy();
         mysqli_close($this->co);
     }
+    
+    public function destroy(){
+        mysqli_query($co, "DELETE FROM `Utilisateur` WHERE `identifiant_user`= $this->id")
+        or die("Erreur suppression ".mysqli_error($co));
+    }
+    
 }
 ?>

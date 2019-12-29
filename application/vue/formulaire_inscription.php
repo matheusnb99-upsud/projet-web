@@ -52,15 +52,15 @@
 	
 	<h2>Nouveau étudiant</h2> 
 	<form action="../controler/inscription.php" method="post" >
-	    <p>Nom <input type="text" name="last-name" size='15' maxlength='40'  placeholder="Nom"></p>
-		<p>Prenom <input type="text" name="first-name" size='15' maxlength='40'  placeholder="Prenom"></p>
+	    <p>Nom <input type="text" name="last-name"  maxlength='40'  placeholder="Nom"></p>
+		<p>Prenom <input type="text" name="first-name"  maxlength='40'  placeholder="Prenom"></p>
 		
-	    <p>Adresse mail<input type="text" name="mail" size='15' maxlength='40' placeholder="email" onblur='validatorEmail.setVal1(this)'></p>
-	    <p>Confirmation d'adresse mail<input type="text" name="mail" size='15' maxlength='40' placeholder="Confirmation d'email" onblur='validatorEmail.setVal2(this)'></p>
+	    <p>Adresse mail<input type="text" name="mail"  maxlength='40' placeholder="email" onblur='validatorEmail.setVal1(this)'></p>
+	    <p>Confirmation d'adresse mail<input type="text" name="mail"  maxlength='40' placeholder="Confirmation d'email" onblur='validatorEmail.setVal2(this)'></p>
 		<p id='ErreurVerificationEmail'> <p>
 
-	    <p>Mot de passe <input type="password" name="pswd" size='15' maxlength='40' placeholder="Mot de passe" onblur='validatorPwd.setVal1(this)'></p>
-		<p>Confirmation mot de passe <input type="password" name="pswd" size='15' maxlength='40' placeholder="Confirmation de mot de passe" onblur='validatorPwd.setVal2(this)'></p>
+	    <p>Mot de passe <input type="password" name="pswd"  maxlength='40' placeholder="Mot de passe" onblur='validatorPwd.setVal1(this)'></p>
+		<p>Confirmation mot de passe <input type="password" name="pswd"  maxlength='40' placeholder="Confirmation de mot de passe" onblur='validatorPwd.setVal2(this)'></p>
 		<p id='ErreurVerificationMotdepasse'> <p>
 
 		<p>Date de naissance<input type="text"	onfocus="(this.type='date');
