@@ -23,3 +23,6 @@ acc:
 
 formulaire_inscription:
     Validator.js dans son propre ficher 
+
+README.MD
+	faire le readme
