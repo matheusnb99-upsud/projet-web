@@ -16,3 +16,12 @@ formulaire_inscription.php
 			name="dateNaissance" 
 			placeholder="Date de Naissance">
 	</p>
+
+
+
+
+
+
+
+
+# Un utilisateur peut s'exprimer qu'une seule et unique fois

@@ -30,3 +30,9 @@ README.MD
 
 formulaire_creation_proposition:
     wysiwyg editor
+
+
+
+bd => Banni:=> add banni pour combien de temps?
+bd => Commentaire:=> add commenter le commentaire
+bd => Commentaire:=> add possibilité de reporter le commentaire

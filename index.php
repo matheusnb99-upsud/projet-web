@@ -1,1 +1,3 @@
-<?php header('location:./application/vue/accueil.php');?>
+<?php header('location:./application/vue/accueil.php');
+
+?>

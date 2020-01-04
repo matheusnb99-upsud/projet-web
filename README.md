@@ -1,5 +1,3 @@
-Le ficher docs contient une documentation plus elaboré et il est separé en differents fichers.
-
 # Ceci est un projet web pour mon s3
 
 IUT d'Orsay
