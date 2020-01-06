@@ -23,7 +23,7 @@
 	</form>	
 	<a href="formulaire_inscription.php">Vous n'avez pas encore une compte?</a>
 	<?php
-		require_once('verification_loggout.php');
+		// require_once('verification_loggout.php');
 	?>
 
 </body>

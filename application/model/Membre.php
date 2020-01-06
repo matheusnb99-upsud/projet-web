@@ -27,17 +27,14 @@ class Membre{
                                              AND `password` = '$password'")
                 or die;
                 
-                //if(mysqli_num_rows($result)==0) throw new Exception();
-                if($test = mysqli_num_rows($result)==0) echo $test;
-
                 while($row = mysqli_fetch_assoc($result)){
                     $this->co = $co;
                     $this->email = $email;
                     $this->password = $password;
-                    $this->id = $row['id'];
+                    $this->id = $row['identifiant_user'];
                     $this->nom = $row['nom_user'];
                     $this->prenom = $row['prenom_user'];
-                    $this->dateNaisance = $row['date_naisance'];
+                    $this->dateNaisance = $row['date_naissance'];
                     $this->dateCreation = $row['date_creation_user'];
                 }
                 break;
@@ -85,7 +82,7 @@ class Membre{
         $_SESSION['password'] = $this->password;
         $_SESSION['dateNaisance'] = $this->dateNaisance;
         $_SESSION['dateCreation'] = $this->dateCreation;
-
+        $_SESSION['Membre'] = $this;
     }
     public function deconnection(){
         session_destroy();

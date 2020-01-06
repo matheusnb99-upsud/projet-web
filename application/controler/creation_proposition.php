@@ -4,6 +4,7 @@
 
     require_once('../model/Bd.php');
     require_once('../model/Membre.php');
+    require_once('../model/Proposition.php');
 
 
     session_start();

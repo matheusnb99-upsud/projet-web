@@ -10,3 +10,6 @@ https://www.digitalocean.com/community/tutorials/understanding-classes-in-javasc
 
 Update page sans recharger (ajax + php)
 https://www.youtube.com/watch?v=aujNp92p0Uc
+
+Navbar Bootstrap
+https://mdbootstrap.com/docs/jquery/navigation/navbar/#how-it-works

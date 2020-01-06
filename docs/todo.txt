@@ -36,3 +36,32 @@ formulaire_creation_proposition:
 bd => Banni:=> add banni pour combien de temps?
 bd => Commentaire:=> add commenter le commentaire
 bd => Commentaire:=> add possibilité de reporter le commentaire
+
+
+
+
+
+
+  <!--Section: -->
+  <section id="responsive-behaviors">
+
+    <!--Title-->
+    <h2 class="section-heading mb-4"> Responsive behaviors </h2>
+
+    <!--Description-->
+    <p class="description">Navbars can utilize </p>
+    <p>For navbars that never collapse, add the </p>
+
+    <!--Subheading-->
+    <h4 id="toggler" class=""> <strong>Toggler</strong></h4>
+
+    <!--Description-->
+    <p class="description">Navbar togglers  are aehhr</p>
+
+    <p>With no </p>
+
+
+    <!--Section: Live preview-->
+    <!--Section: Code-->..
+<!--Footer-->
+<!--/.Footer-->

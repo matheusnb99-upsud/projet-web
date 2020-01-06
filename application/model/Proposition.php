@@ -5,7 +5,7 @@ class Proposition{
     
     // variables de la base
     private $id;        // pk
-    private $titre;     // str not null
+    public $titre;     // str not null
     private $description;       // text
     private $number_reports;    // int nullable
     private $votes_positives;   // int nullablenull
@@ -72,6 +72,20 @@ class Proposition{
                 $this->dateCreationProposition = $dateCreationProposition;
                 $this->idCreateurProposition = $idCreateurProposition;
                 break;
+            
+            case 10:
+                $co = $args[0];
+                $id = $args[1];
+                $titre = $args[2];
+                $description = $args[3];
+                $this->number_reports = $args[4];
+                $this->votes_positives = $args[5];
+                $this->votes_negatives = $args[6];
+                $this->votes_total = $args[7];
+                $this->dateCreationProposition = $args[8];
+                $idCreateurProposition = $args[9];
+                
+                break;
             defaut: 
                 echo "<script>console.log('hey buddy, wrong number of arguments when creating Proposition object')</script>";
         }
@@ -100,6 +114,42 @@ class Proposition{
     public function removeCategorie($idCategorie){
         /* Cette fonction ne sera utilisé que dans le cas de l'edition de la propositon */
         $this->listeCategories = \array_diff($this->listeCategories, $idCategorie);
+    }
+    
+    public function getProposition(){
+        return this; // + commentaire + tags
+    }
+    public static function getPropositions(){ // Returns json de Proposition
+        /**
+         * Usage:   getPropositions(co) 
+         *          getPropositions(co, NombreProposition)
+         *          getPropositions(co, NombreProposition, OrderBy)
+         * 
+         */
+        $cpt= func_num_args();
+        $args= func_get_args();
+        $res= array();
+        
+        $co = $args[0];
+        $number_propositions = "LIMIT ".$args[1];
+        $order_by = "";
+        if($cpt == 3){
+            if($args[2] == "titre" || $args[2] == "votes_positives" || $args[2] == "votes_negatives" || $args[2] == "votes_total" || $args[2] == "date_creation_proposition"){
+                $order_by = " ORDER BY ".$args[2];   
+            }
+        } 
+
+
+        $result = mysqli_query($co, "SELECT * FROM Proposition".$order_by." ".$number_propositions)
+        or die;
+        
+        while($row = mysqli_fetch_assoc($result)){
+            $p = new Proposition($co, $row['proposition_id'],$row['titre'],$row['description'],$row['number_reports'],$row['votes_positives'],$row['votes_negatives'],$row['votes_total'],$row['date_creation_proposition'],$row['identifiant_user']);
+            array_push($res, json_encode($p));
+            echo "<br>".$p->titre;
+        }
+        return $res;
+
     }
 }
 ?>

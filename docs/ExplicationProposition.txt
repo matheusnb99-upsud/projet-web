@@ -1,0 +1,33 @@
+Inspiré de Reddit.com
+
+Structure proposition
+<!--Section -->
+    <!--Section:Side Buttons -->
+        <section>
+            Boutons vote positif, negatif et la valeur final (apres les 3 jours passées)
+        </section>
+    <!--/Section:Side Buttons -->
+
+    <!--Section:Proposition -->
+    <section>
+        <!--Division:Entete -->
+            <!--Author-->
+            <!--Date Posted-->
+        <!--/Division:Entete -->
+
+        <!--Division:info -->
+            <!--Title-->
+            <!--Tags-->
+        <!--/Division:info -->
+
+        <!--Division:post -->
+            <!--Description-->
+        <!--/Division:post -->
+
+        <!--Division:footer -->
+            <!--Nombre commentaires-->
+            <!--Partager lien avec autres reseaux sociaux-->
+        <!--/Division:footer -->
+    <!--/Section:Proposition -->
+
+<!--/Section-->
