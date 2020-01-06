@@ -88,9 +88,9 @@ _agile.set_account("8tsva545o547r732truup1icmg","mdbootstrap"); _agile_execute_w
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-default"
           aria-labelledby="navbarDropdownMenuLink-333">
-          <a class="dropdown-item" href="../profile.php">My profile</a>
-          <a class="dropdown-item" href="../editer_profile.php">User settings</a>
-          <a class="dropdown-item" href="../controler/deconnexion.php">Log out</a>
+          <a class="dropdown-item" href="./profile.php">My profile</a>
+          <a class="dropdown-item" href="./editer_profile.php">User settings</a>
+          <a class="dropdown-item" href="./controler/deconnexion.php">Log out</a>
         </div>
       </li>
     </ul>

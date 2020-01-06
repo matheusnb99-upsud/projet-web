@@ -1,4 +1,4 @@
-# model
+<!-- model -->
 <?php 
 class Bd{
     private $co;

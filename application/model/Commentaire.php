@@ -1,5 +1,4 @@
-
-# model
+<!-- model -->
 <?php     
 class Commentaire{
     private $co;        // co 

@@ -1,10 +1,6 @@
 formulaire_inscription:
-    script verification mdp
-    script verification mail
-
-
-    (form1 && form2).outFocus => echo verif(form1,form2)? "error":null;
-    done
+    verification mail
+    verification force mdp
 
 connexion:
     si user.inexistant? header(404:membres)
@@ -16,16 +12,9 @@ Acc:
         => ajax + connect _POST
 
 
-acc:
-    si _session (cookie?) => change header to logged.php
-    create  logged.php/header
-            unlogged.php/header
-
 formulaire_inscription:
     Validator.js dans son propre ficher 
 
-README.MD
-	faire le readme
 
 
 formulaire_creation_proposition:
@@ -38,30 +27,8 @@ bd => Commentaire:=> add commenter le commentaire
 bd => Commentaire:=> add possibilité de reporter le commentaire
 
 
-
-
-
-
-  <!--Section: -->
-  <section id="responsive-behaviors">
-
-    <!--Title-->
-    <h2 class="section-heading mb-4"> Responsive behaviors </h2>
-
-    <!--Description-->
-    <p class="description">Navbars can utilize </p>
-    <p>For navbars that never collapse, add the </p>
-
-    <!--Subheading-->
-    <h4 id="toggler" class=""> <strong>Toggler</strong></h4>
-
-    <!--Description-->
-    <p class="description">Navbar togglers  are aehhr</p>
-
-    <p>With no </p>
-
-
-    <!--Section: Live preview-->
-    <!--Section: Code-->..
-<!--Footer-->
-<!--/.Footer-->
+----
+creation Groupe.php
+    liste Banis
+    liste Rejoint
+    f invite(Membre) => email

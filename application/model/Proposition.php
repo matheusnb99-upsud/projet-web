@@ -1,11 +1,11 @@
-# model
+<!-- model -->
 <?php     
 class Proposition{
     private $co;        // co 
     
     // variables de la base
     private $id;        // pk
-    public $titre;     // str not null
+    private $titre;     // str not null
     private $description;       // text
     private $number_reports;    // int nullable
     private $votes_positives;   // int nullablenull
@@ -29,7 +29,7 @@ class Proposition{
             case 2:         // la proposition existe deja
                 $co = $args[0];
                 $id = $args[1];
-                
+
                 $result = mysqli_query($co, "SELECT * FROM Proposition
                                              WHERE `proposition_id` = '$id'")
                 or die;
@@ -74,16 +74,16 @@ class Proposition{
                 break;
             
             case 10:
-                $co = $args[0];
-                $id = $args[1];
-                $titre = $args[2];
-                $description = $args[3];
+                $this->co = $args[0];
+                $this->id = $args[1];
+                $this->titre = $args[2];
+                $this->description = $args[3];
                 $this->number_reports = $args[4];
                 $this->votes_positives = $args[5];
                 $this->votes_negatives = $args[6];
                 $this->votes_total = $args[7];
                 $this->dateCreationProposition = $args[8];
-                $idCreateurProposition = $args[9];
+                $this->idCreateurProposition = $args[9];
                 
                 break;
             defaut: 
@@ -98,6 +98,25 @@ class Proposition{
     public function addCommentaire($commentaireObj){
         /* On peut ajouter un commentaire après que la proposition soit publié*/
         $this->listeCommentaires = array_push($this->listeCommentaires, $commentaireObj->getIdCommentaire());
+    }
+    public function voter($val){
+        if($val==true) $this->votes_positives+=1;
+        else $this->votes_negatives+=1;
+        $this->votes_total +=1;
+
+        mysqli_query($co, "UPDATE `Proposition` 
+                        SET `votes_positives` = '$this->votes_positives',`votes_negatives`='$this->votes_negatives',`votes_total`= '$this->votes_total'
+                        WHERE `proposition_id`= $this->id")
+        or die("Erreur insertion".mysqli_error($co));
+    }
+    
+    public function reporter(){
+        $this->number_reports+=1;
+        if($this->number_reports<10){
+            mysqli_query($co, "UPDATE `Proposition` SET `number_reports` = '$this->number_reports')
+                                WHERE `proposition_id`= $this->id)")
+            or die("Erreur insertion".mysqli_error($co));
+        }else $this->destroy();
     }
 
     public function removeCommentair($commentaireObj){
@@ -117,9 +136,26 @@ class Proposition{
     }
     
     public function getProposition(){
-        return this; // + commentaire + tags
+        return $this; // + commentaire + tags
     }
-    public static function getPropositions(){ // Returns json de Proposition
+    public function gettitre(){
+        return $this->titre; 
+    }
+    public function toJson(){
+        $p = array("id"=>$this->id,
+        "titre"=>$this->titre,
+        "desc"=>$this->description,
+        "nRep"=>$this->number_reports,
+        "votP"=>$this->votes_positives,
+        "votN"=>$this->votes_negatives,
+        "total"=>$this->votes_total,
+        "date"=>$this->dateCreationProposition,
+        "idCreateur"=>$this->idCreateurProposition);
+        //var_dump(json_encode($p));
+        return json_encode($p);
+    }
+    
+    public static function getPropositions(){ // Returns json 
         /**
          * Usage:   getPropositions(co) 
          *          getPropositions(co, NombreProposition)
@@ -139,14 +175,19 @@ class Proposition{
             }
         } 
 
-
-        $result = mysqli_query($co, "SELECT * FROM Proposition".$order_by." ".$number_propositions)
-        or die;
+        $result = mysqli_query($co, "SELECT * FROM utilisateur NATURAL JOIN Proposition NATURAL JOIN est NATURAL JOIN categorie ".$order_by." ".$number_propositions)
+        //$result = mysqli_query($co, "SELECT * FROM Proposition")
+        or die("Erreur querry");
         
         while($row = mysqli_fetch_assoc($result)){
-            $p = new Proposition($co, $row['proposition_id'],$row['titre'],$row['description'],$row['number_reports'],$row['votes_positives'],$row['votes_negatives'],$row['votes_total'],$row['date_creation_proposition'],$row['identifiant_user']);
-            array_push($res, json_encode($p));
-            echo "<br>".$p->titre;
+            $p = new Proposition($co,   $row['proposition_id'],$row['titre'],$row['description'],$row['number_reports'],$row['votes_positives'],
+                                        $row['votes_negatives'],$row['votes_total'],$row['date_creation_proposition'],$row['identifiant_user']);
+            $json = json_decode($p->toJson(), true);
+            $json['auteur'] = $row['email_user'];
+            $json['tag'] = $row['name_cat'];
+            
+            array_push($res, json_encode($json));
+            //var_dump($res);
         }
         return $res;
 
