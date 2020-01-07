@@ -1,26 +1,46 @@
 <?php 
-
     require_once('../controler/getPropositions.php');
+    require_once('../controler/getMyGroupes.php');
     session_start();
     if(isset($_SESSION['email'])){ // && ($_SESSION['email']) == null
-        include './header/loggued.php';
+        $connected = true;
+    }else{        
+        $connected = false;
+    }
+
+    if($connected){
+    /*
+        $listeGroupes = getMyGroupes();
+        foreach( $listeGroupes as $p) {
+            $arr    =  json_decode($p, true);
+            foreach( $arr as $el) {
+                $echo $el;
+            }
+        }
+    */
+
+
+        include './header/logged.php';
     }
     else{
-        include './header/unloggued.php';
+        include './header/unlogged.php';
     }
-    $json = getProp(2);
+
+    $jsonPropositions = getProp(2);
 ?>
 
 <h2>
-
 <?php 
-    echo "hi ".$_SESSION['email'];
+    if($connected)
+        echo "hi ".$_SESSION['email'];
+    else
+        echo "Hi stranger";
 ?>
 </h2>
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed inventore laboriosam nulla necessitatibus et corrupti eum sapiente dolorem omnis assumenda, laborum doloremque quisquam nostrum blanditiis earum totam suscipit quasi aut.</p>
 
 <?php 
-    foreach( $json as $p) {
+    foreach( $jsonPropositions as $p) {
         $arr    =  json_decode($p, true);
         $auteur = $arr["auteur"];
         $date   = $arr["date"];

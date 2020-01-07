@@ -12,9 +12,6 @@ class Commentaire{
     private $votes_negatives;   // int nullable
     private $dateCreationCommentaire;   // sysdate
 
-    // arrays
-    private $listeCommentaires;         // liste de commentaires par id
-
     // fonctions
     public function __construct(){ // 
         /* idAuteur passé par cookie; idProposition passé par ?; commentaireBrut peut etre formate par wysiwyg
@@ -24,8 +21,7 @@ class Commentaire{
          * ajouter obj commentaire     => Commentaire(co, idAuteur, idProposition) 3
          * 
          * */
-        // initialization des listes
-        $this->listeCommentaires = array();
+        
         $cpt= func_num_args();
         $args= func_get_args();
         switch($cpt){
@@ -35,11 +31,9 @@ class Commentaire{
                 $idProposition = $args[2];
                 
                 
-                $result = mysqli_query($co, "SELECT * FROM Commentaire WHERE `identifiant_user` = '$idAuteur' AND `proposition_id` = '$idProposition")
-                or die;
+                $result = mysqli_query($co, "SELECT * FROM commente WHERE `identifiant_user` = '$idAuteur' AND `proposition_id` = '$idProposition'")
+                or die("Erreur Select Commentaire");
                 
-                if(mysqli_num_rows($result)==0) throw new Exception();  // si aucun resultat, lancer exeption
-
                 while($row = mysqli_fetch_assoc($result)){
                     $this->co = $co;
                     $this->idAuteur = $idAuteur;          
@@ -58,8 +52,6 @@ class Commentaire{
                 $idProposition = $args[2];
                 $commentaireBrut = $args[3];
                 $dateCreationCommentaire = new Datetime();
-	
-
                 
                 mysqli_query($co, "INSERT INTO `Commente` (`identifiant_user`, `proposition_id`, `date_creation`, `commentaire`, `nombre_likes`, `nombre_deslikes`, `nombre_reports`) 
                                     VALUES('$idAuteur','$idProposition',CURRENT_TIMESTAMP,$commentaireBrut,0,0,0)")

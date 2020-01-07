@@ -41,7 +41,7 @@ _agile.set_account("8tsva545o547r732truup1icmg","mdbootstrap"); _agile_execute_w
 <body>
   <!--Navbar -->
 <nav class="mb-1 navbar navbar-expand-lg navbar-dark default-color">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="./accueil">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
     aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -61,12 +61,12 @@ _agile.set_account("8tsva545o547r732truup1icmg","mdbootstrap"); _agile_execute_w
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">Dropdown
+          aria-haspopup="true" aria-expanded="false">Groupes
         </a>
         <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <?php
+          ?><a class="dropdown-item" href="#">Tous</a>
+
         </div>
       </li>
     </ul>
@@ -90,7 +90,7 @@ _agile.set_account("8tsva545o547r732truup1icmg","mdbootstrap"); _agile_execute_w
           aria-labelledby="navbarDropdownMenuLink-333">
           <a class="dropdown-item" href="./profile.php">My profile</a>
           <a class="dropdown-item" href="./editer_profile.php">User settings</a>
-          <a class="dropdown-item" href="./controler/deconnexion.php">Log out</a>
+          <a class="dropdown-item" href="../controler/deconnexion.php">Log out</a>
         </div>
       </li>
     </ul>

@@ -1,6 +1,10 @@
 <!-- model -->
 <?php 
     
+    require_once('../model/Commentaire.php');
+    require_once('../model/Proposition.php');
+    require_once('../model/Groupe.php');
+
 class Membre{
     private $co;
     private $id;
@@ -10,9 +14,19 @@ class Membre{
     private $password;
     private $dateNaisance;
     private $dateCreation;
+
+    // arrays
+    private $listeGroupes;
+    private $listePropositions;
+    private $listeCommentaires;
     
     
     public function __construct(){
+        // initialization des listes
+        $this->listeGroupes = array();
+        $this->listePropositions = array();
+        $this->listeCommentaires = array();
+
         $cpt= func_num_args();
         $args= func_get_args();
         switch($cpt){
@@ -37,6 +51,11 @@ class Membre{
                     $this->dateNaisance = $row['date_naissance'];
                     $this->dateCreation = $row['date_creation_user'];
                 }
+                
+                echo '<br>berr';
+                $this->getFromBase('proposition', $this->listeGroupes, 'Groupe');
+                $this->getFromBase('rejoint', $this->listePropositions, 'Proposition');
+                $this->getFromBase('proposition', $this->listeCommentaires, 'Commentaire');
                 break;
             case 6:
                 $co = $args[0];
@@ -65,12 +84,42 @@ class Membre{
                 echo "<script>console.log('hey buddy, wrong number of arguments when creating Member object')</script>";
         }
     }
+    private function getFromBase($table, $arr, $class){
+        /*    Cette fonction est pour reproduire l'un de ces lignes:
+            array_push($this->listeGroupes, new Groupe($this->co, $this->id));
+            array_push($this->listePropositions, new Proposition($this->co, $row['proposition_id']));
+            array_push($this->listeCommentaires, new Commentaire($this->co, $this->id, $row['proposition_id']));
+        */
+        if($table == 'proposition') $idTable = 'proposition_id';
+        else if($table == 'rejoint') $idTable = 'group_id';
+
+        $req = "SELECT ".$idTable." FROM Utilisateur NATURAL JOIN ".$table."
+        WHERE Utilisateur.`identifiant_user` = ".$this->id;
+
+        $result = mysqli_query($this->co, $req)
+        or die("Erreur select membre.".$table);
+        
+        echo '<br>berr';
+        while($row = mysqli_fetch_assoc($result)){            
+            if($class == 'Commentaire')
+                $tempVal = new $class($this->co, $this->id, $row['proposition_id']);
+            
+            else
+                $tempVal = new $class($this->co,  $row[$idTable]);
+
+                echo '<br>berr';
+            array_push($arr, $tempVal);
+            echo '<br>berr';
+        }
+        echo '<br>berr'.$arr;
+    }
+    
     public function modif_mdepasse($newPassword){
         $id = $this->id;
         $this->password = $newPassword;
         
         mysqli_query($co, "UPDATE Membre SET password = '$newPassword'
-                            WHERE id = '$id')")
+                            WHERE identifiant_user = '$id')")
         or die("Erreur update");
     }
     public function startConnection(){
@@ -82,7 +131,6 @@ class Membre{
         $_SESSION['password'] = $this->password;
         $_SESSION['dateNaisance'] = $this->dateNaisance;
         $_SESSION['dateCreation'] = $this->dateCreation;
-        $_SESSION['Membre'] = $this;
     }
     public function deconnection(){
         session_destroy();
@@ -93,6 +141,15 @@ class Membre{
         mysqli_query($co, "DELETE FROM `Utilisateur` WHERE `identifiant_user`= $this->id")
         or die("Erreur suppression ".mysqli_error($co));
     }
-    
+    public function getGroupes(){
+        echo count($this->listeGroupes);
+        return json_encode($this->listeGroupes);
+    }
+    public function getPropositions(){
+        return json_encode($this->listePropositions);
+    }
+    public function getCommentaires(){
+        return json_encode($this->listeCommentaires);
+    }    
 }
 ?>

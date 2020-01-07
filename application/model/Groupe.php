@@ -73,6 +73,9 @@ class Groupe{
         mysqli_query($co, "DELETE FROM `groupe` WHERE `group_id`= $this->id")
         or die("Erreur suppression ".mysqli_error($co));
     }
+    public function getTitre(){
+        return $this->nom;
+    }
     
 }
 ?>

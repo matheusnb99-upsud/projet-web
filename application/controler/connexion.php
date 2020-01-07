@@ -7,8 +7,9 @@
 
     session_start();
     if (isset($_SESSION['email'])) {
-        header('Location:../vue/deconnexion.php');
+        header('Location:../controler/deconnexion.php');
     }
+    session_destroy();
 
     if (isset($_POST["email"]) && isset($_POST["pwd"])) {
         $email = $_POST["email"];

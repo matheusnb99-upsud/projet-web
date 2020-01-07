@@ -9,10 +9,13 @@
 <body>
     <?php 
         session_start();
-        if(isset($_SESSION['email']) && ($_SESSION['email'] == null)
+        if(isset($_SESSION['email']) && ($_SESSION['email'] == null))
             header('Location:../vue/connexion.php');
+        
+        include './header/logged.php';
     ?>
     <section id='mesPropositions'></section>
     <section id='mesGroupes'></section>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At ratione voluptatibus sunt in necessitatibus eius minima voluptate, tempore aperiam praesentium quam reiciendis natus consequuntur, nemo architecto ullam rem commodi. Quis!</p>
 </body>
 </html>
