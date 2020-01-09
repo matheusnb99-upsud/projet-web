@@ -9,3 +9,4 @@ addition de attribut:
 
 
 ALTER TABLE `commente` ADD `nombre_reports` TINYINT NULL DEFAULT NULL AFTER `nombre_deslikes`;
+ALTER TABLE `proposition` CHANGE `proposition_id` `proposition_id` INT(11) NOT NULL AUTO_INCREMENT;

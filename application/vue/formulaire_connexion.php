@@ -7,6 +7,8 @@
 
 </head>
 <body>	
+	
+<?php include './header/unlogged.php';?>
 	<header>
 		<h1>Authentification</h1> 
 	</header>

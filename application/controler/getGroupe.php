@@ -5,11 +5,16 @@
 
     require_once('../model/Bd.php');
     require_once('../model/Membre.php');
+    require_once('../model/Proposition.php');
 
-    function getMyGroupes(){
-        session_start();
+
+    function getGroupe($idGroupe){
         $co = (new Bd('databasProjetTutore'))->connection();
-        $gp = (new Membre($co, $_SESSION['email'],$_SESSION['password']))->getGroupes();
-        return $gp;
+        $gp = (new Groupe($co, $idGroupe));
+        return  $gp->toJson();
     }
+
 ?>
+
+
+

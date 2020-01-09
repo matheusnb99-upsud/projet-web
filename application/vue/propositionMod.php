@@ -9,56 +9,39 @@
      * partager: propositions/$id
      */
 ?>
-<!--Section -->
-<section>
-    <!--Section:Side Buttons -->
-    <section class='sideButtons'>
-        <button>+</button>
-        <p>val</p>
-        <button>-</button>
-    </section>
-    <!--/Section:Side Buttons -->
 
-    <!--Section:Proposition -->
-    <section id="proposition_<?php echo $id;?>">
-        <!--Division:Entete -->
-        <div id='header'>
-            <!--Author-->
-            <p class="auteur"> <?php echo $auteur;?> </p>
-            <!--Date Posted-->
-            <p class="date"> <?php echo $date;?> </p>
+<!--Post -->
+<div class="post" style="max-width: 80%;margin-left:40px">
+    <div class="wrap-ut pull-left">
+        <div class="userinfo pull-left">
+            <div class="icons">
+                <p><?php echo $auteur;?></p>
+            </div>
         </div>
-        <!--/Division:Entete -->
-
-        <!--Division:info -->
-        <div id='info'>
-            <!--Title-->
-            <p class="titre"> <?php echo $titre;?> </p>
-            <!--Tags-->
-            <p class="tags"><?php echo $tags;?> </p>
+        <div class="posttext pull-left" style="padding-left:40px">
+            <h2><a href="./proposition.php?id=<?php echo $id;?>"><?php echo $titre;?></a></h2>
+            <small><?php echo $tags;?></small>
+            <p style='font-weight: bold;'><?php echo $description;?></p>
         </div>
-        <!--/Division:info -->
-
-        <!--Division:post -->
-        <div id='mainPost'>
-            <!--Description-->
-            <p class="description"> <?php echo $description;?> </p>
+        <div class="clearfix"></div>
+    </div>
+    <div class="postinfo pull-left">
+        <div class="comments">
+            <i class="fa fa-arrow-up"></i>
+                <?php echo $voteP;?>
+                <div class="mark"></div>
+            <i class="fa fa-arrow-down"></i>
+                <?php echo $voteN;?>
         </div>
-        <!--/Division:post -->
+        <div class="time"><i class="fa fa-clock-o"></i> 
+        <?php 
+            $date1 = $date;
+            setlocale(LC_TIME, "fr_FR","French");
+            $date = strftime("%d %B %Y", strtotime($date1));
+            echo $date.'<br>'.strftime(" %H:%M", strtotime($date1));
+        ?></div>                                    
+    </div>
+    <div class="clearfix"></div>
+</div>
 
-        <!--Division:footer -->
-        <div id='footer'>
-            <!--Commenter-->
-            <p class="commentaire"> <?php echo $ncom;?>  commentaires</p>
-            <!--Partager-->
-            <p class="partager"> share href facebook?</p>
-        </div>
-        <!--/Division:footer -->
-
-    </section>
-
-    
-    <!--/Section:Proposition -->
-
-</section>
-<!--/Section-->
+<!--/Post-->

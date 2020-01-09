@@ -4,12 +4,13 @@
  ini_set('display_errors', 0);
 
     require_once('../model/Bd.php');
-    require_once('../model/Membre.php');
+    require_once('../model/Categorie.php');
+    $a = getCategories();
 
-    function getMyGroupes(){
+    function getCategories(){
         session_start();
         $co = (new Bd('databasProjetTutore'))->connection();
-        $gp = (new Membre($co, $_SESSION['email'],$_SESSION['password']))->getGroupes();
+        $gp = Categorie::getCategories($co);
         return $gp;
     }
 ?>

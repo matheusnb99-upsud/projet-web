@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
+    
+<?php include './header/unlogged.php';?>
     <?php 
         session_start();
         if(isset($_SESSION['email']) && ($_SESSION['email'] == null))

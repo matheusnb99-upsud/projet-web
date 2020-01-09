@@ -1,5 +1,9 @@
 <!-- model -->
 <?php     
+
+require_once('../model/Commentaire.php');
+require_once('../model/Categorie.php');
+
 class Proposition{
     private $co;        // co 
     
@@ -49,6 +53,41 @@ class Proposition{
                     $this->idCreateurProposition = $row['identifiant_user'];
                 }
                 break;
+            case 5:
+                $co = $args[0];
+                $titre = $args[1];
+                $description = $args[2];
+                $idCreateurProposition = $args[3];
+                $listeIdCat = $args[4];
+                
+
+                
+                mysqli_query($co, "INSERT INTO `Proposition` (`titre`, `description`, `number_reports`, `votes_positives`, 
+                `votes_negatives`,`votes_total`, `date_creation_proposition`, identifiant_user) 
+                                        VALUES('$titre','$description',0,0,0,0,CURRENT_TIMESTAMP,'$idCreateurProposition')")
+                or die("Erreur insertion".mysqli_error($co));
+
+                $this->co = $co;
+                $this->id = mysqli_insert_id($co);
+                $this->titre = $titre;
+                $this->description = $description;
+                $this->number_reports = 0;
+                $this->votes_positives = 0;
+                $this->votes_negatives = 0;
+                $this->votes_total = 0;
+                $this->dateCreationProposition = $dateCreationProposition;
+                $this->idCreateurProposition = $idCreateurProposition;
+
+
+                foreach($listeIdCat as $idCat){
+                    array_push($this->listeCategories, new Categorie($this->co, $idCat));
+                
+                    mysqli_query($co, "INSERT INTO `est` (`proposition_id`, `categorie_id`)
+                                            VALUES('$this->id','$idCat')") or die;
+                }
+                break;
+                
+            
             case 4:
                 $co = $args[0];
                 $titre = $args[1];
@@ -58,7 +97,7 @@ class Proposition{
                 
                 mysqli_query($co, "INSERT INTO `Proposition` (`titre`, `description`, `number_reports`, `votes_positives`, 
                 `votes_negatives`,`votes_total`, `date_creation_proposition`, identifiant_user) 
-                                     VALUES('$titre','$description',0,0,0,0,CURRENT_TIMESTAMP,'$idCreateurProposition')")
+                                        VALUES('$titre','$description',0,0,0,0,CURRENT_TIMESTAMP,'$idCreateurProposition')")
                 or die("Erreur insertion".mysqli_error($co));
                 
                 $this->co = $co;
@@ -127,7 +166,7 @@ class Proposition{
     public function addCategorie($idCategorie){
         /* Cette fonction ne sera utilisé que dans le cas de l'edition de la propositon */
         mysqli_query($this->co, "INSERT INTO `est` VALUES($this->id, $idCategorie)") or die("Erreur insertion".mysqli_error($co));
-        $this->listeCategories = array_push($this->listeCategories, $idCategorie);
+        array_push($this->listeCategories, new Categorie($this->co, $idCategorie));
     }
 
     public function removeCategorie($idCategorie){

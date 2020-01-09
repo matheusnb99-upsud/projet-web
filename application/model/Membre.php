@@ -52,9 +52,8 @@ class Membre{
                     $this->dateCreation = $row['date_creation_user'];
                 }
                 
-                echo '<br>berr';
-                $this->getFromBase('proposition', $this->listeGroupes, 'Groupe');
-                $this->getFromBase('rejoint', $this->listePropositions, 'Proposition');
+                $this->getFromBase('rejoint', $this->listeGroupes, 'Groupe');
+                $this->getFromBase('proposition', $this->listePropositions, 'Proposition');
                 $this->getFromBase('proposition', $this->listeCommentaires, 'Commentaire');
                 break;
             case 6:
@@ -84,7 +83,7 @@ class Membre{
                 echo "<script>console.log('hey buddy, wrong number of arguments when creating Member object')</script>";
         }
     }
-    private function getFromBase($table, $arr, $class){
+    private function getFromBase($table, &$arr, $class){
         /*    Cette fonction est pour reproduire l'un de ces lignes:
             array_push($this->listeGroupes, new Groupe($this->co, $this->id));
             array_push($this->listePropositions, new Proposition($this->co, $row['proposition_id']));
@@ -99,19 +98,15 @@ class Membre{
         $result = mysqli_query($this->co, $req)
         or die("Erreur select membre.".$table);
         
-        echo '<br>berr';
-        while($row = mysqli_fetch_assoc($result)){            
+        while($row = mysqli_fetch_assoc($result)){     
             if($class == 'Commentaire')
                 $tempVal = new $class($this->co, $this->id, $row['proposition_id']);
-            
             else
                 $tempVal = new $class($this->co,  $row[$idTable]);
-
-                echo '<br>berr';
+            
             array_push($arr, $tempVal);
-            echo '<br>berr';
         }
-        echo '<br>berr'.$arr;
+             
     }
     
     public function modif_mdepasse($newPassword){
@@ -142,14 +137,24 @@ class Membre{
         or die("Erreur suppression ".mysqli_error($co));
     }
     public function getGroupes(){
-        echo count($this->listeGroupes);
-        return json_encode($this->listeGroupes);
+        return $this->listeGroupes;
+        //return json_encode($this->listeGroupes);
     }
     public function getPropositions(){
-        return json_encode($this->listePropositions);
+        return $this->listePropositions;
     }
     public function getCommentaires(){
-        return json_encode($this->listeCommentaires);
+        return $this->listeCommentaires;
+    }   
+    public function getMail(){
+        return $this->email;
+    }   
+    public function getId(){
+        return $this->id;
+    }   
+    public function ajouterGroupe($groupe){
+        array_push($this->listeGroupes, $groupe);
     }    
+
 }
 ?>

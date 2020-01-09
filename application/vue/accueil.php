@@ -2,6 +2,10 @@
     require_once('../controler/getPropositions.php');
     require_once('../controler/getMyGroupes.php');
     session_start();
+
+    
+    error_reporting(E_ALL);
+    ini_set('display_errors', 0);
     if(isset($_SESSION['email'])){ // && ($_SESSION['email']) == null
         $connected = true;
     }else{        
@@ -9,24 +13,14 @@
     }
 
     if($connected){
-    /*
         $listeGroupes = getMyGroupes();
-        foreach( $listeGroupes as $p) {
-            $arr    =  json_decode($p, true);
-            foreach( $arr as $el) {
-                $echo $el;
-            }
-        }
-    */
-
-
         include './header/logged.php';
     }
     else{
         include './header/unlogged.php';
     }
 
-    $jsonPropositions = getProp(2);
+    $jsonPropositions = getProp(5);
 ?>
 
 <h2>
@@ -43,11 +37,12 @@
     foreach( $jsonPropositions as $p) {
         $arr    =  json_decode($p, true);
         $auteur = $arr["auteur"];
-        $date   = $arr["date"];
+        $date   = ($arr["date"]);
         $titre  = $arr["titre"];
         $tags   = $arr["tag"];
         $description= $arr["desc"];
-        $ncom   = null;
+        $voteN   = $arr["votN"];
+        $voteP   = $arr["votP"];
         $id     = $arr['id'];
         include './propositionMod.php';
     }

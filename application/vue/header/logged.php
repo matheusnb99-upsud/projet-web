@@ -54,10 +54,7 @@ _agile.set_account("8tsva545o547r732truup1icmg","mdbootstrap"); _agile_execute_w
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="./formulaire_creation_proposition.php">Creer proposition</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
@@ -65,22 +62,16 @@ _agile.set_account("8tsva545o547r732truup1icmg","mdbootstrap"); _agile_execute_w
         </a>
         <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
           <?php
+    
+            foreach( $listeGroupes as $g) {
+                echo "<a class='dropdown-item' href='./groupe.php?idGroupe=".urlencode($g->getId())."'>".$g->getTitre()."</a>";
+                }
           ?><a class="dropdown-item" href="#">Tous</a>
 
         </div>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto nav-flex-icons">
-      <li class="nav-item">
-        <a class="nav-link waves-effect waves-light">
-          <i class="fab fa-twitter"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link waves-effect waves-light">
-          <i class="fab fa-google-plus-g"></i>
-        </a>
-      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
