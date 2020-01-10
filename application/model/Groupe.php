@@ -1,5 +1,6 @@
 <!-- model -->
 <?php 
+    require_once('../model/Proposition.php');
     require_once('../model/Membre.php');
     
 class Groupe{
@@ -42,7 +43,7 @@ class Groupe{
                 $co = $args[0];
                 $id = $args[1];
                 
-                $result = mysqli_query($co, "SELECT * FROM groupe
+                $result = mysqli_query($co, "SELECT * FROM Groupe
                                              WHERE `group_id` = '$id'")
                 or die;
                 
@@ -54,6 +55,10 @@ class Groupe{
                     $this->dateSuppression = $row['date_suppression_groupe'];
                     $this->idCreateur = $row['identifiant_user'];
                 } // select nj rejoint and bani
+
+                
+                $this->getFromBase('Rejoint', $this->listeMembres);
+                $this->getFromBase('Banni', $this->listeBans);
                 break;
             case 3:
                 $co = $args[0];
@@ -62,7 +67,7 @@ class Groupe{
                 $dateCreation = new Datetime();
                 
                 mysqli_query($co, "INSERT INTO `groupe` (`name_group`,`date_creation_groupe`,`identifiant_user`) 
-                                     VALUES('$nom',CURRENT_TIMESTAMP,'$email','$idCreateur')")
+                                     VALUES('$nom',CURRENT_TIMESTAMP,'$idCreateur')")
                 or die("Erreur insertion".mysqli_error($co));
                 
                 $this->co = $co;
@@ -70,13 +75,43 @@ class Groupe{
                 $this->nom = $nom;
                 $this->dateCreation = $dateCreation;
                 $this->dateSuppression = null;
+                $this->idCreateur = $idCreateur;
                 break;
             defaut: 
                 echo "<script>console.log('hey buddy, wrong number of arguments when creating Member object')</script>";
         }
     }
+    private function getFromBase($table, &$arr){
+        
+        /*    Cette fonction est pour reproduire l'un de ces lignes:
+            array_push($this->listeBans, new Membre($this->co, login, mdp));
+            array_push($this->listeMembres, new Membre($this->co, login, mdp));
+            array_push($this->listeAdmins, new Membre($this->co, login, mdp));
+
+            select * from table where groupeid = this
+            table[0] = 'rejoint'
+
+        */
+        if($this->id!=0){
+            $req = "SELECT * FROM ".$table." WHERE ".$table.".`group_id` = ".$this->id;
+
+            $result = mysqli_query($this->co, $req) or die("Erreur select Groupe.".$table);
+            
+            while($row = mysqli_fetch_assoc($result)){    
+                $req = "SELECT `email_user`,`password` FROM utilisateur WHERE `identifiant_user` = ".$row['identifiant_user'];
+                $result = mysqli_query($this->co, $req) or die("Erreur select Groupe.".$table);
+                $email = mysqli_fetch_assoc($result)['email_user'];
+                $pwd = mysqli_fetch_assoc($result)['password'];
+                array_push($arr, new Membre($this->co, $email, $pwd, 0));
+            }
+        }
+             
+    }
+
+
+    
     public function destroy(){
-        mysqli_query($co, "DELETE FROM `groupe` WHERE `group_id`= $this->id")
+        mysqli_query($co, "DELETE FROM `Groupe` WHERE `group_id`= $this->id")
         or die("Erreur suppression ".mysqli_error($co));
     }
     public function getTitre(){
@@ -85,8 +120,31 @@ class Groupe{
     public function getId(){
         return $this->id;
     }
-    public static function getGroupe(){
-        return $this->id;
+    public function isAdmin($membre){
+        return ($this->idCreateur == $membre->getId());
+    }
+
+    public function getBans(){
+        return $this->listeBans;
+    }
+
+    public function getMembres(){
+        $temp = array();
+        foreach(($this->listeMembres) as $m){
+            $temp[$m->getId()]= $m->getMail();
+        }
+        return $temp;
+    }
+    public static function bannir($membre){
+        array_push($this->listeBans, $membre);
+
+        mysqli_query($this->co, "DELETE FROM `rejoint` WHERE `identifiant_user`= '$membre->getId()'")
+        or die("Erreur ban membre ".mysqli_error($co));
+
+        mysqli_query($this->co, "INSERT INTO `banni` (`identifiant_user`,`group_id`,`date_banni`) 
+        VALUES('$membre->getId()','$this->id',CURRENT_TIMESTAMP)")
+        or die("Erreur insertion");
+
     }
 
     public function toJson(){
@@ -100,6 +158,11 @@ class Groupe{
     }
 
     public function ajouterMembre($membre){
+        $result = mysqli_query($co, "SELECT * FROM banni
+        WHERE `group_id` = '$this->id' AND `identifiant_user`='$membre->getId()'")
+        or die;
+
+        if(!mysql_num_rows($result)) die("Membre Banni de ce groupe");
         array_push($this->listeMembres, $membre);
         $mid =  $membre->getId();
                 

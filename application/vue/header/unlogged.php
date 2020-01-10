@@ -7,7 +7,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
         <!-- CSS -->
-        <link href="../style/header.css" rel="stylesheet">
+        <link href="../../style/header.css" rel="stylesheet">
 
 		<!-- get jQuery from the google apis -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
@@ -31,7 +31,7 @@
             <div class="headernav">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="accueil.html"><i class="fa fa-atom"></i></a></div>
+                        <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="accueil.php"><i class="fa fa-atom"></i></a></div>
                         <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
                             <div class="dropdown">
                                 <a data-toggle="dropdown" href="#" >Groupes</a> <b class="caret"></b>
@@ -59,16 +59,7 @@
                                 <form action="./formulaire_inscription.php" method="post" class="form">
                                     <button class="btn btn-primary btn-outline-primary">Sign up</button>
                                 </form>
-                            </div>
-                              <div class="avatar pull-left dropdown">
-                                <a data-toggle="dropdown" href="#"><i style='padding-left:25px;' class="fa fa-user fa-2x"></i></a> <b class="caret"></b>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="./profile.php">Mon profil</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-2" href="./editer_profile.php">Parametres</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="../controler/deconnexion.php">Log Out</a></li>                                    
-                                </ul>
-                            </div>
-                            
+                            </div>                            
                             <div class="clearfix"></div>
                         </div>
                     </div>

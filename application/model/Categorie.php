@@ -18,7 +18,7 @@ class Categorie{
             $co = $args[0];
             $id = $args[1];
 
-            $result = mysqli_query($co, "SELECT * FROM categorie
+            $result = mysqli_query($co, "SELECT * FROM Categorie
                                             WHERE `categorie_id` = '$id'")
             or die;
             
@@ -34,7 +34,7 @@ class Categorie{
             $co = $args[0];
             $nom = $args[1];
 
-            mysqli_query($co, "INSERT INTO `categorie` (`name_cat`) VALUES('$nom'")
+            mysqli_query($co, "INSERT INTO `Categorie` (`name_cat`) VALUES('$nom'")
             or die("Erreur insertion".mysqli_error($co));
             $this->co = $co;
             $this->id = mysqli_insert_id($co);
@@ -43,7 +43,7 @@ class Categorie{
     }
 
     public function destroy(){
-        mysqli_query($co, "DELETE FROM `categorie` WHERE `categorie_id`= $this->id")
+        mysqli_query($co, "DELETE FROM `Categorie` WHERE `categorie_id`= $this->id")
         or die("Erreur suppression ".mysqli_error($co));
     }
 
@@ -57,7 +57,7 @@ class Categorie{
     
     public static function getCategories($co){ // Returns json 
 
-        $result = mysqli_query($co, "SELECT * FROM categorie ")
+        $result = mysqli_query($co, "SELECT * FROM Categorie ")
         or die("Erreur querry");
         $res = array();
         while($row = mysqli_fetch_assoc($result)){

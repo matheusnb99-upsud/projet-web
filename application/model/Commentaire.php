@@ -31,7 +31,7 @@ class Commentaire{
                 $idProposition = $args[2];
                 
                 
-                $result = mysqli_query($co, "SELECT * FROM commente WHERE `identifiant_user` = '$idAuteur' AND `proposition_id` = '$idProposition'")
+                $result = mysqli_query($co, "SELECT * FROM Commente WHERE `identifiant_user` = '$idAuteur' AND `proposition_id` = '$idProposition'")
                 or die("Erreur Select Commentaire");
                 
                 while($row = mysqli_fetch_assoc($result)){
@@ -52,9 +52,10 @@ class Commentaire{
                 $idProposition = $args[2];
                 $commentaireBrut = $args[3];
                 $dateCreationCommentaire = new Datetime();
+                echo 'test';
                 
                 mysqli_query($co, "INSERT INTO `Commente` (`identifiant_user`, `proposition_id`, `date_creation`, `commentaire`, `nombre_likes`, `nombre_deslikes`, `nombre_reports`) 
-                                    VALUES('$idAuteur','$idProposition',CURRENT_TIMESTAMP,$commentaireBrut,0,0,0)")
+                                    VALUES('$idAuteur','$idProposition',CURRENT_TIMESTAMP,'$commentaireBrut',0,0,0)")
                 or die("Erreur insertion".mysqli_error($co));
                 
                 $this->co = $co;

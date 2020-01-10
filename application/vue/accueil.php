@@ -14,36 +14,39 @@
 
     if($connected){
         $listeGroupes = getMyGroupes();
-        include './header/logged.php';
+        include './header/headertest.php';
     }
     else{
         include './header/unlogged.php';
     }
 
-    $jsonPropositions = getProp(5);
+    $jsonPropositions = getProp(10);
 ?>
 
-<h2>
+<h2 style='margin: 50px;'>
 <?php 
     if($connected)
         echo "hi ".$_SESSION['email'];
     else
         echo "Hi stranger";
 ?>
-</h2>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed inventore laboriosam nulla necessitatibus et corrupti eum sapiente dolorem omnis assumenda, laborum doloremque quisquam nostrum blanditiis earum totam suscipit quasi aut.</p>
 
+</h2>
 <?php 
     foreach( $jsonPropositions as $p) {
         $arr    =  json_decode($p, true);
         $auteur = $arr["auteur"];
         $date   = ($arr["date"]);
+        $boolDate = ((strtotime($arr["datej"])) > new DateTime());
+        
         $titre  = $arr["titre"];
         $tags   = $arr["tag"];
         $description= $arr["desc"];
         $voteN   = $arr["votN"];
         $voteP   = $arr["votP"];
         $id     = $arr['id'];
+        $voteT= $arr['total'];
+        
         include './propositionMod.php';
     }
 

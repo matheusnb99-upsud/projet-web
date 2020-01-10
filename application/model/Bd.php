@@ -11,6 +11,9 @@ class Bd{
         $this->host = 'localhost';
         $this->user = 'root';
         $this->password = '';
+        
+        //$this->user = 'admin';
+        //$this->password = 'admin';
         $this->bdd = $bdd;
     }
     

@@ -8,11 +8,15 @@
 </head>
 <body>
     
-<?php include './header/unlogged.php';?>
     <?php 
         session_start();
-        if(isset($_SESSION['email']) && ($_SESSION['email'] == null))
+        if(isset($_SESSION['email']) && ($_SESSION['email'] == null)){
             header('Location:../vue/connexion.php');
+            $listeGroupes = getMyGroupes();
+            include './header/headertest.php';
+
+        }
+
     ?>
     <section id='parametrages_compte'>
         <div id='Preferences'>

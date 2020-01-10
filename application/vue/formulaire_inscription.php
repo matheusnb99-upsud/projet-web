@@ -43,12 +43,17 @@
 		
 	</script>
 
-
 </head>
 <body ng-app="">	
-	<header>
-		<h1>Inscription étudiants</h1> 
-	</header>
+	
+	<?php include './header/unlogged.php';?>
+		<header>
+			<h1>Inscription étudiants</h1> 
+		</header>
+	<?php
+		session_start();
+	?>
+	
 	
 	<h2>Nouveau étudiant</h2> 
 	<form action="../controler/inscription.php" method="post" >

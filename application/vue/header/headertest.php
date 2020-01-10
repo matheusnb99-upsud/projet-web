@@ -8,7 +8,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         
         <!-- CSS -->
-        <link href="../style/style.css" rel="stylesheet">
+        <link href="../../style/style.css" rel="stylesheet">
 
 		<!-- get jQuery from the google apis -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
@@ -34,7 +34,7 @@
             <div class="headernav">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="index.html"><img src="http://forum.azyrusthemes.com/images/logo.jpg" alt=""  /></a></div>
+                        <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="accueil.php"><img src="http://forum.azyrusthemes.com/images/logo.jpg" alt=""  /></a></div>
                         <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
                             <div class="dropdown">
                                 <a data-toggle="dropdown" href="#" >Groupes</a> <b class="caret"></b>
@@ -45,6 +45,7 @@
                                         echo "<li role='presentation'><a role='menuitem' tabindex='-1' href='./groupe.php?idGroupe=".$g->getId()."'>".$g->getTitre()."</a></li>";
                                         $i -= 1;}            
                                     ?>
+                                    <li role='presentation'><a role='menuitem' tabindex='-1' href='./formulaire_creation_groupe.php'> Creer Groupe </a></li>
                                 </ul>
                             </div>
                         </div>

@@ -9,9 +9,19 @@
      * partager: propositions/$id
      */
 ?>
+<head>
+    <link href="../../style/header.css" rel="stylesheet">
+    <script>
+    function voter(i, id) {
+        console.log(id);
+        <?php $voteT += 1;?>
+    }
+    </script>    
 
+</head>
+<body>
 <!--Post -->
-<div class="post" style="max-width: 80%;margin-left:40px">
+<div class="post" style="margin:12px 40px">
     <div class="wrap-ut pull-left">
         <div class="userinfo pull-left">
             <div class="icons">
@@ -27,12 +37,18 @@
     </div>
     <div class="postinfo pull-left">
         <div class="comments">
-            <i class="fa fa-arrow-up"></i>
-                <?php echo $voteP;?>
-                <div class="mark"></div>
-            <i class="fa fa-arrow-down"></i>
-                <?php echo $voteN;?>
+            <?php 
+                if($boolDate) 
+                    echo $voteP.'
+                    <div class="mark"></div>
+                    '.$voteN;
+                else 
+                    echo '
+                    <a onclick="voter(1, '.$id.')"><i class="fa fa-arrow-up"></i></a>'.$voteT.'
+                    <i class="fa fa-arrow-down"></i>';
+           ?> 
         </div>
+
         <div class="time"><i class="fa fa-clock-o"></i> 
         <?php 
             $date1 = $date;
@@ -44,4 +60,5 @@
     <div class="clearfix"></div>
 </div>
 
+</body>
 <!--/Post-->

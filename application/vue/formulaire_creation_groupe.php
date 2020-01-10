@@ -64,59 +64,18 @@
         ?>
 	</header>	
     <section class="content">
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-xs-16" style='padding-top: 50px;'>
 
                     <!-- POST -->
                     <div class="post">
-                        <form action='../controler/creation_proposition.php' class="form newtopic" method="post" id='form'>
+                        <form action='../controler/creation_groupe.php' class="form newtopic" method="post" id='form'>
                             <div class="topwrap">
-                                <div class="userinfo pull-left">
-
-                                    <div class="email" style="width: 1px;word-wrap: break-word;white-space: pre-wrap;">
-                                        <div class="text-center">
-                                            <p style='padding-left:50%;'><?php echo $_SESSION['nom']; ?></p>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="posttext pull-left">
-
                                     <div>
                                         <input type="text" name='titre' placeholder="Titre" class="form-control">
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6">
-                                            <select name="categorieSelect" id="catSelect" class="form-control">
-                                                <option value="">--Aucune--</option>
-                                                <?php 
-                                                    require_once('../controler/get_categories.php');
-                                                    $cats = getCategories();
-                                                    foreach( $cats as $c) {
-                                                        echo "<option name=".$c->getId()." value=".$c->getTitre().">".$c->getTitre()."</option>";
-                                                    }
-                                                
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <textarea style='resize: vertical;' name='description' id="desc" placeholder="Description (optionel)" class="form-control"></textarea>
-                                    </div>
-                                    <div class="row newtopcheckbox">
-                                        <div class="col-lg-6 col-md-6">
-                                            <div><p>Tags:</p></div>
-                                            <div class="row">
-                                                <div class="col-lg-5 col-md-6">
-                                                    <div class="categories" id='divCat'>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
                                 <div class="clearfix"></div>
                             </div>                              

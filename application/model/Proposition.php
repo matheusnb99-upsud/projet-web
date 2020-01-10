@@ -16,6 +16,7 @@ class Proposition{
     private $votes_negatives;   // int nullable
     private $votes_total;       // int nullable
     private $dateCreationProposition;   // sysdate
+    private $datePropositionTroisJours;  // sysdate +3d
     private $idCreateurProposition;     // fk
 
     // arrays
@@ -50,6 +51,7 @@ class Proposition{
                     $this->votes_negatives = $row['votes_negatives'];
                     $this->votes_total = $row['votes_total'];
                     $this->dateCreationProposition = $row['date_creation_proposition'];
+                    $this->datePropositionTroisJours = $row['date_suppression_proposition'];
                     $this->idCreateurProposition = $row['identifiant_user'];
                 }
                 break;
@@ -75,8 +77,9 @@ class Proposition{
                 $this->votes_positives = 0;
                 $this->votes_negatives = 0;
                 $this->votes_total = 0;
-                $this->dateCreationProposition = $dateCreationProposition;
+                $this->dateCreationProposition = new Datetime();
                 $this->idCreateurProposition = $idCreateurProposition;
+                $this->datePropositionTroisJours =  strtotime($dateCreationProposition . ' +3 days');
 
 
                 foreach($listeIdCat as $idCat){
@@ -94,7 +97,9 @@ class Proposition{
                 $description = $args[2];
                 $idCreateurProposition = $args[3];
                 $dateCreationProposition = new Datetime();
+                $datePropositionTroisJours = date_add($dateCreationProposition, date_interval_create_from_date_string('3 days'));
                 
+
                 mysqli_query($co, "INSERT INTO `Proposition` (`titre`, `description`, `number_reports`, `votes_positives`, 
                 `votes_negatives`,`votes_total`, `date_creation_proposition`, identifiant_user) 
                                         VALUES('$titre','$description',0,0,0,0,CURRENT_TIMESTAMP,'$idCreateurProposition')")
@@ -109,6 +114,7 @@ class Proposition{
                 $this->votes_negatives = 0;
                 $this->votes_total = 0;
                 $this->dateCreationProposition = $dateCreationProposition;
+                $this->datePropositionTroisJours = $datePropositionTroisJours;
                 $this->idCreateurProposition = $idCreateurProposition;
                 break;
             
@@ -136,7 +142,7 @@ class Proposition{
 
     public function addCommentaire($commentaireObj){
         /* On peut ajouter un commentaire après que la proposition soit publié*/
-        $this->listeCommentaires = array_push($this->listeCommentaires, $commentaireObj->getIdCommentaire());
+        $this->listeCommentaires = array_push($this->listeCommentaires, $commentaireObj);
     }
     public function voter($val){
         if($val==true) $this->votes_positives+=1;
@@ -160,7 +166,7 @@ class Proposition{
 
     public function removeCommentair($commentaireObj){
         /* On peut supprimer un commentaire si on est l'auteur ou si on est un admin*/
-        $this->listeCommentaires = \array_diff($this->listeCommentaires, $commentaireObj->getIdCommentaire());
+        $this->listeCommentaires = \array_diff($this->listeCommentaires, $commentaireObj);
     }
     
     public function addCategorie($idCategorie){
@@ -175,10 +181,25 @@ class Proposition{
     }
     
     public function getProposition(){
-        return $this; // + commentaire + tags
+        $co = $this->co;
+        $result = mysqli_query($co, 
+        "SELECT * FROM Utilisateur NATURAL JOIN Proposition NATURAL JOIN Est NATURAL JOIN Categorie WHERE Proposition.proposition_id = '$this->id'")
+        or die("Erreur query Proposition");
+        
+        while($row = mysqli_fetch_assoc($result)){
+            $json = json_decode($this->toJson(), true);
+            $json['auteur'] = $row['email_user'];
+            $json['tag'] = $row['name_cat'];
+        }
+        return json_encode($json);
+
+    
     }
     public function gettitre(){
         return $this->titre; 
+    }
+    public function dateS(){
+        return $this->$this->datePropositionTroisJours; 
     }
     public function toJson(){
         $p = array("id"=>$this->id,
@@ -189,6 +210,7 @@ class Proposition{
         "votN"=>$this->votes_negatives,
         "total"=>$this->votes_total,
         "date"=>$this->dateCreationProposition,
+        "datej"=>$this->datePropositionTroisJours,
         "idCreateur"=>$this->idCreateurProposition);
         //var_dump(json_encode($p));
         return json_encode($p);
@@ -201,6 +223,7 @@ class Proposition{
          *          getPropositions(co, NombreProposition, OrderBy)
          * 
          */
+         
         $cpt= func_num_args();
         $args= func_get_args();
         $res= array();
@@ -214,20 +237,26 @@ class Proposition{
             }
         } 
 
-        $result = mysqli_query($co, "SELECT * FROM utilisateur NATURAL JOIN Proposition NATURAL JOIN est NATURAL JOIN categorie ".$order_by." ".$number_propositions)
+        $result = mysqli_query($co, 
+        "SELECT * FROM Utilisateur 
+        NATURAL JOIN Proposition 
+        LEFT JOIN Est ON Proposition.proposition_id = Est.proposition_id
+        LEFT JOIN Categorie ON Est.categorie_id = Categorie.categorie_id
+         ".$order_by." ".$number_propositions)
         //$result = mysqli_query($co, "SELECT * FROM Proposition")
-        or die("Erreur querry");
+        or die("Erreur query Proposition");
         
         while($row = mysqli_fetch_assoc($result)){
+            //var_dump($row['proposition_id']);
             $p = new Proposition($co,   $row['proposition_id'],$row['titre'],$row['description'],$row['number_reports'],$row['votes_positives'],
                                         $row['votes_negatives'],$row['votes_total'],$row['date_creation_proposition'],$row['identifiant_user']);
             $json = json_decode($p->toJson(), true);
             $json['auteur'] = $row['email_user'];
             $json['tag'] = $row['name_cat'];
-            
             array_push($res, json_encode($json));
-            //var_dump($res);
+            
         }
+        //var_dump($json);
         return $res;
 
     }
